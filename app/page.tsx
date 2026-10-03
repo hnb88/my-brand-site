@@ -1,3 +1,4 @@
+import { Books } from "@/components/books";
 import { Cases } from "@/components/cases";
 import { Hero } from "@/components/hero";
 import { Services } from "@/components/services";
@@ -19,12 +20,7 @@ export default function Home() {
       <Cases />
 
       {/* 图书区 */}
-      <section
-        id="books"
-        className="flex min-h-[60vh] scroll-mt-20 items-center justify-center border-t"
-      >
-        <h2 className="text-3xl font-bold text-primary">图书区</h2>
-      </section>
+      <Books />
 
       {/* 评价区 */}
       <section

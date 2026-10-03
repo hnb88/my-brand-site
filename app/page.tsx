@@ -1,3 +1,4 @@
+import { Cases } from "@/components/cases";
 import { Hero } from "@/components/hero";
 import { Services } from "@/components/services";
 import { Skills } from "@/components/skills";
@@ -15,12 +16,7 @@ export default function Home() {
       <Services />
 
       {/* 案例区 */}
-      <section
-        id="cases"
-        className="flex min-h-[60vh] scroll-mt-20 items-center justify-center border-t"
-      >
-        <h2 className="text-3xl font-bold text-primary">案例区</h2>
-      </section>
+      <Cases />
 
       {/* 图书区 */}
       <section

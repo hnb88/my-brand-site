@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { AiChat } from "@/components/ai-chat";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <AiChat />
       </body>
     </html>
   );

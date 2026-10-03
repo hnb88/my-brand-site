@@ -1,4 +1,5 @@
 import { Hero } from "@/components/hero";
+import { Services } from "@/components/services";
 import { Skills } from "@/components/skills";
 
 export default function Home() {
@@ -11,12 +12,7 @@ export default function Home() {
       <Skills />
 
       {/* 服务区 */}
-      <section
-        id="services"
-        className="flex min-h-[60vh] scroll-mt-20 items-center justify-center border-t"
-      >
-        <h2 className="text-3xl font-bold text-primary">服务区</h2>
-      </section>
+      <Services />
 
       {/* 案例区 */}
       <section

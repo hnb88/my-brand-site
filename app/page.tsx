@@ -1,4 +1,5 @@
 import { Hero } from "@/components/hero";
+import { Skills } from "@/components/skills";
 
 export default function Home() {
   return (
@@ -7,12 +8,7 @@ export default function Home() {
       <Hero />
 
       {/* 技能区 */}
-      <section
-        id="skills"
-        className="flex min-h-[60vh] scroll-mt-20 items-center justify-center border-t"
-      >
-        <h2 className="text-3xl font-bold text-primary">技能区</h2>
-      </section>
+      <Skills />
 
       {/* 服务区 */}
       <section

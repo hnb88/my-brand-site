@@ -43,7 +43,11 @@ export function getAllPosts(): BlogPost[] {
         readingMinutes: calcReadingMinutes(content),
       };
     })
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+    .sort((a, b) => {
+      // 日期倒序；同日文章保持文件顺序（比较器对相同日期必须返回 0，否则顺序会被反转）
+      if (a.date === b.date) return 0;
+      return a.date < b.date ? 1 : -1;
+    });
 }
 
 // 读取单篇文章：frontmatter 信息 + 完整正文内容

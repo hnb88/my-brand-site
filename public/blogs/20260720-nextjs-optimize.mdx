@@ -1,0 +1,23 @@
+---
+title: "三个技巧让 Next.js 页面更快"
+date: "2026-07-20"
+summary: "页面慢不一定是后端的问题，资源加载和渲染策略往往才是关键。"
+---
+
+页面慢，问题往往不在后端，而在资源加载和渲染策略。下面分享三个我常用的技巧，改造成本都很低。
+
+<Steps>
+<Step title="图片优化">
+自动压缩加懒加载，首屏立刻变快。
+</Step>
+<Step title="静态生成">
+列表页、文章页在构建时生成好。
+</Step>
+<Step title="延迟加载">
+图表、视频等重组件，滚动到再加载。
+</Step>
+</Steps>
+
+<Diff before='import BigChart from "./BigChart"' after='const BigChart = dynamic(() => import("./BigChart"))' />
+
+三个技巧加起来，首屏经常能快一半。如果你的首页也有大图表，不妨先从这里下手。

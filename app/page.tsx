@@ -1,6 +1,7 @@
 import { BlogSection } from "@/components/blog-section";
 import { Books } from "@/components/books";
 import { Cases } from "@/components/cases";
+import { getAllPosts } from "@/lib/blogs";
 import { Hero } from "@/components/hero";
 import { ReviewForm } from "@/components/review-form";
 import { ReviewList } from "@/components/review-list";
@@ -52,8 +53,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 博客区 */}
-      <BlogSection />
+      {/* 博客区：构建时读取全部文章，分页在客户端按 ?page= 参数切换 */}
+      <BlogSection posts={getAllPosts()} />
     </main>
   );
 }

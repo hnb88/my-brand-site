@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { ThemeProvider } from "next-themes";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -73,6 +74,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Umami 访问统计：隐私友好的分析工具，defer 不阻塞页面渲染 */}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="963727e5-b8ce-456f-9d30-5b6703f8af6d"
+          defer
+        />
+
         {/* 主题切换：默认跟随系统，用户选择存在 localStorage */}
         <ThemeProvider
           attribute="class"

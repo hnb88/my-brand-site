@@ -4,6 +4,7 @@ import "./globals.css";
 import { AiChat } from "@/components/ai-chat";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { WeixinButton } from "@/components/weixin-button";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,6 +36,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <AiChat />
+        <WeixinButton />
       </body>
     </html>
   );

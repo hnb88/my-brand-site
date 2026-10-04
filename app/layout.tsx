@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AiChat } from "@/components/ai-chat";
@@ -67,15 +68,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
+    // suppressHydrationWarning：主题切换会在 <html> 上增删 class，避免水合报错
+    <html lang="zh-CN" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        {children}
-        <Footer />
-        <AiChat />
-        <WeixinButton />
+        {/* 主题切换：默认跟随系统，用户选择存在 localStorage */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          {children}
+          <Footer />
+          <AiChat />
+          <WeixinButton />
+        </ThemeProvider>
       </body>
     </html>
   );

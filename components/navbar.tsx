@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navLinks = [
   { href: "/#hero", label: "首页" },
@@ -43,15 +44,19 @@ export function Navbar() {
           ))}
         </ul>
 
-        {/* 移动端菜单按钮 */}
-        <button
-          type="button"
-          aria-label="打开菜单"
-          onClick={() => setOpen(true)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:hidden"
-        >
-          <Menu className="h-6 w-6" />
-        </button>
+        {/* 右侧：主题切换 + 移动端菜单按钮 */}
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+
+          <button
+            type="button"
+            aria-label="打开菜单"
+            onClick={() => setOpen(true)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:hidden"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
       </nav>
 
       {/* 移动端菜单面板 */}

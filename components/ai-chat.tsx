@@ -204,7 +204,14 @@ export function AiChat() {
 
           {/* 输入区：输入框 + 发送按钮 */}
           <form
-            onSubmit={handleSubmit}
+            onSubmit={(e) => {
+              // 回车提交也挡住空白内容（发送按钮已有同样保护，ai@4 内部只判断空字符串）
+              if (!input.trim()) {
+                e.preventDefault();
+                return;
+              }
+              handleSubmit(e);
+            }}
             className="flex items-center gap-2 border-t border-border p-3"
           >
             <Input

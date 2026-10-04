@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export function WeixinButton() {
   const [open, setOpen] = useState(false);
@@ -36,10 +37,11 @@ export function WeixinButton() {
         onClick={() => setOpen((prev) => !prev)}
         className="group fixed bottom-[9.5rem] right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
       >
-        <img
+        <Image
           src="/weixin/weixin-logo.png"
           alt=""
-          aria-hidden
+          width={44}
+          height={44}
           className="h-full w-full rounded-full object-cover"
         />
 
@@ -60,10 +62,12 @@ export function WeixinButton() {
           className="fixed bottom-[9.5rem] right-20 z-50 w-60 rounded-xl border border-border bg-card p-4 shadow-2xl"
         >
           <p className="text-center text-sm font-semibold">微信：nb199829</p>
-          <img
+          <Image
             src="/weixin/weixin-qr.png"
             alt="微信二维码"
-            className="mt-3 w-full rounded-lg"
+            width={240}
+            height={240}
+            className="mt-3 h-auto w-full rounded-lg"
           />
         </div>
       )}

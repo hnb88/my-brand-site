@@ -1,0 +1,131 @@
+---
+title: "MDX 能做哪些 Markdown 做不到的事"
+date: "2026-01-01"
+summary: "用 11 个互动组件演示 MDX 的威力：提示框、标签页、折叠面板、步骤卡片、代码复制、B 站视频、引用、键盘按键、代码对比、时间轴、文件下载。"
+---
+
+Markdown 只能写静态内容，而 MDX 允许在文章里直接使用 React 组件。这篇文章逐一演示本站博客支持的 11 种互动组件。
+
+## 1. 提示框 Callout
+
+四种颜色对应四种语义，标题可以自定义。
+
+<Callout type="info" title="说明">
+蓝色提示框，适合补充背景信息或注意事项。
+</Callout>
+
+<Callout type="tip" title="技巧">
+紫色提示框，适合分享实用的小技巧。
+</Callout>
+
+<Callout type="warning" title="警告">
+黄色提示框，适合提醒潜在的风险。
+</Callout>
+
+<Callout type="success" title="成功">
+绿色提示框，适合总结成果或给出结论。
+</Callout>
+
+## 2. 标签页 Tabs
+
+点击顶部标签切换不同内容，适合对比多种方案。
+
+<Tabs>
+<TabsItem label="Next.js">
+全栈框架，前后端一体，生态成熟。
+</TabsItem>
+<TabsItem label="Vite">
+构建工具，冷启动快，适合纯前端项目。
+</TabsItem>
+<TabsItem label="Webpack">
+老牌打包器，配置灵活，插件丰富。
+</TabsItem>
+</Tabs>
+
+## 3. 折叠面板 Accordion
+
+点击标题展开或收起内容，适合放常见问题。
+
+<Accordion title="MDX 和 Markdown 有什么区别？">
+MDX 完全兼容 Markdown 语法，并额外支持在文章里嵌入 React 组件，让文章具备交互能力。
+</Accordion>
+
+<Accordion title="这篇文章里的代码可以复制吗？">
+可以。鼠标悬停在任意代码块上，右上角会出现「复制」按钮，点击一键复制。
+</Accordion>
+
+## 4. 步骤卡片 Steps
+
+带编号的步骤展示，步骤之间有连接线。
+
+<Steps>
+<Step title="安装依赖">
+在项目里安装 next-mdx-remote 和 gray-matter。
+</Step>
+<Step title="编写组件">
+在 components/mdx 目录下编写互动组件。
+</Step>
+<Step title="写文章">
+在 public/blogs 下写 MDX 文章，直接使用这些组件。
+</Step>
+</Steps>
+
+## 5. 代码块复制按钮
+
+鼠标悬停在代码块上，右上角出现「复制」按钮，点击一键复制。所有代码块都有这个效果。
+
+```tsx
+export function Greet({ name }: { name: string }) {
+  return <h1>你好，{name}！</h1>
+}
+```
+
+## 6. B 站视频嵌入
+
+视频自适应宽度，默认以最高清晰度播放。
+
+<BilibiliVideo bvid="BV1nS411w7mf" title="B 站视频演示" />
+
+## 7. 引用卡片 Quote
+
+大字引用加署名，左侧有一条品牌色竖线。
+
+<Quote author="韩老师">
+AI 时代学习编程的最好方式，就是边做项目边学。
+</Quote>
+
+## 8. 键盘按键 Kbd
+
+可以在正文句子里直接展示按键，比如按 <Kbd>Ctrl</Kbd> + <Kbd>S</Kbd> 保存文件，按 <Kbd>F12</Kbd> 打开开发者工具。
+
+## 9. 代码对比 Diff
+
+并排展示代码修改前后的变化：删除的行显示红色，新增的行显示绿色。
+
+<Diff before='const message = "Hello " + name + "!"' after='const message = `Hello ${name}!`' />
+
+## 10. 时间轴 Timeline
+
+竖向时间线，每个节点显示时间、标题和说明，适合展示学习路径。
+
+<Timeline>
+<TimelineItem time="2025-06" title="开始学习前端">
+从 HTML、CSS、JavaScript 打基础。
+</TimelineItem>
+<TimelineItem time="2025-09" title="入门 Next.js">
+搭建第一个全栈项目，学会前后端一体开发。
+</TimelineItem>
+<TimelineItem time="2026-01" title="发布个人品牌站">
+上线本网站，持续用 MDX 写博客。
+</TimelineItem>
+</Timeline>
+
+## 11. 文件下载按钮 Download
+
+带图标的下载按钮，显示文件名和大小。文件放在 public/pdf 目录下，链接地址是 /pdf/ 加文件名。
+
+<Download name="课程资料示例.pdf" size="780 KB" />
+
+---
+
+以上就是本站博客支持的 11 种互动组件。你也可以在 public/blogs 下新建文章，直接使用这些组件。

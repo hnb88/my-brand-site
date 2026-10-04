@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { serialize } from "next-mdx-remote/serialize";
+import { MdxContent } from "@/components/mdx/mdx-content";
 import { getAllPosts, getPostBySlug } from "@/lib/blogs";
 
 type Props = {
@@ -23,9 +24,12 @@ export function generateMetadata({ params }: Props) {
   };
 }
 
-export default function BlogPostPage({ params }: Props) {
+export default async function BlogPostPage({ params }: Props) {
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
+
+  // 服务端预编译 MDX，客户端直接渲染（支持传入互动组件）
+  const mdxSource = await serialize(post.content);
 
   return (
     <div>
@@ -62,7 +66,7 @@ export default function BlogPostPage({ params }: Props) {
       <article className="bg-background py-12 md:py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <div className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-blockquote:rounded-r-lg prose-blockquote:border-l-primary prose-blockquote:bg-muted prose-blockquote:py-1 prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-foreground">
-            <MDXRemote source={post.content} />
+            <MdxContent source={mdxSource} />
           </div>
 
           {/* 返回博客列表 */}

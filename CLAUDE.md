@@ -66,6 +66,15 @@ public/
 
 public/ai/ 目录必须提交到 git，否则 Vercel 部署时 fs.readFileSync 会报 ENOENT 错误。
 
+## ⚠️ next-mdx-remote@6 渲染方式（必读）
+
+next-mdx-remote@6 主入口的 `MDXRemote` 组件在 Next.js 14.2 的客户端组件里有已知 bug（客户端引用解析为 undefined，报 "Element type is invalid"），不能直接使用。
+
+正确用法（项目已按此实现）：
+- 服务端：详情页用 `next-mdx-remote/serialize` 的 `serialize()` 预编译文章
+- 客户端：`components/mdx/mdx-content.tsx` 的 `MdxContent` 自己实现等价的求值 + `@mdx-js/react` 的 `MDXProvider` 渲染（约 15 行），不要改回直接 import MDXRemote
+- serialize 编译模式随环境变化：开发环境编译为 jsxDEV、生产环境编译为 jsx/jsxs，`MdxContent` 里必须按 NODE_ENV 选择 `react/jsx-dev-runtime` 或 `react/jsx-runtime`，两边必须一致，否则渲染报错
+
 ## ⚠️ MDX 组件水合错误（必读）
 
 自定义 MDX 组件不能用 <p> 包裹 children。

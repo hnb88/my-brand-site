@@ -1,3 +1,4 @@
+import { BlogSection } from "@/components/blog-section";
 import { Books } from "@/components/books";
 import { Cases } from "@/components/cases";
 import { Hero } from "@/components/hero";
@@ -50,6 +51,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* 博客区 */}
+      <BlogSection />
     </main>
   );
 }

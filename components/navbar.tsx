@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/#cases", label: "案例" },
   { href: "/#books", label: "图书" },
   { href: "/#reviews", label: "评价" },
+  { href: "/#blog", label: "博客" },
 ];
 
 export function Navbar() {

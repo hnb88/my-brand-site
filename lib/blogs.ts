@@ -8,10 +8,7 @@ export type BlogPost = {
   date: string;
   summary: string;
   readingMinutes: number; // 预计阅读时长（分钟）
-};
-
-export type BlogPostFull = BlogPost & {
-  content: string; // 正文 MDX 源码，详情页用 next-mdx-remote 渲染
+  content: string; // 正文 MDX 源码：详情页渲染、首页搜索都用它
 };
 
 // 文章目录：public/blogs（必须提交到 git，Vercel 构建时才能读取）
@@ -41,6 +38,7 @@ export function getAllPosts(): BlogPost[] {
         date: data.date ?? "",
         summary: data.summary ?? "",
         readingMinutes: calcReadingMinutes(content),
+        content,
       };
     })
     .sort((a, b) => {
@@ -51,7 +49,7 @@ export function getAllPosts(): BlogPost[] {
 }
 
 // 读取单篇文章：frontmatter 信息 + 完整正文内容
-export function getPostBySlug(slug: string): BlogPostFull | null {
+export function getPostBySlug(slug: string): BlogPost | null {
   try {
     const raw = fs.readFileSync(path.join(BLOGS_DIR, `${slug}.mdx`), "utf-8");
     const { data, content } = matter(raw);

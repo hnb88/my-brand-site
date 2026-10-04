@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { FileText } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { FileText, Search, SearchX } from "lucide-react";
 import type { BlogPost } from "@/lib/blogs";
 import { cn } from "@/lib/utils";
 
@@ -19,13 +19,30 @@ const CARD_GRADIENTS = [
 ];
 
 export function BlogSection({ posts }: { posts: BlogPost[] }) {
-  const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+  const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [pageInput, setPageInput] = useState("1");
 
-  // 挂载后从 URL 的 ?page= 参数恢复页码（刷新保持当前页）
+  // 搜索过滤：标题、摘要、完整正文，不区分大小写；空关键词返回全部
+  const filteredPosts = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return posts;
+    return posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(q) ||
+        post.summary.toLowerCase().includes(q) ||
+        post.content.toLowerCase().includes(q)
+    );
+  }, [posts, query]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / PAGE_SIZE));
+
+  // 挂载后从 URL 的 ?page= 参数恢复页码（刷新保持当前页），只恢复一次
   // 静态 HTML 里默认渲染第 1 页，保证预渲染内容完整
+  const restored = useRef(false);
   useEffect(() => {
+    if (restored.current) return;
+    restored.current = true;
     const param = Number.parseInt(
       new URLSearchParams(window.location.search).get("page") ?? "1",
       10
@@ -70,8 +87,14 @@ export function BlogSection({ posts }: { posts: BlogPost[] }) {
     goToPage(parsed);
   }
 
-  // 当前页的文章
-  const visiblePosts = posts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  // 输入关键词：结果从第 1 页开始展示，URL 页码同步归位
+  function handleQueryChange(value: string) {
+    setQuery(value);
+    goToPage(1);
+  }
+
+  // 当前页的文章（搜索时只在搜索结果里翻页）
+  const visiblePosts = filteredPosts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <section id="blog" className="scroll-mt-20 bg-background py-20 md:py-24">
@@ -95,7 +118,34 @@ export function BlogSection({ posts }: { posts: BlogPost[] }) {
           </div>
         ) : (
           <>
-            <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+            {/* 搜索框：按标题、摘要、正文过滤 */}
+            <div className="relative mx-auto mt-8 max-w-md">
+              <Search
+                aria-hidden
+                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+              />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => handleQueryChange(e.target.value)}
+                placeholder="搜索文章..."
+                aria-label="搜索文章"
+                className="h-10 w-full rounded-md border border-input bg-background pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+
+            {/* 搜索结果为空 */}
+            {filteredPosts.length === 0 ? (
+              <div className="mt-12 flex flex-col items-center py-12 text-center">
+                <SearchX
+                  aria-hidden
+                  className="h-12 w-12 text-muted-foreground/40"
+                />
+                <p className="mt-4 text-muted-foreground">没有找到相关文章</p>
+              </div>
+            ) : (
+              <>
+              <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
               {visiblePosts.map((post, i) => (
                 <a
                   key={post.slug}
@@ -183,6 +233,8 @@ export function BlogSection({ posts }: { posts: BlogPost[] }) {
                   下一页
                 </button>
               </div>
+            )}
+            </>
             )}
           </>
         )}

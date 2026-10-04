@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { serialize } from "next-mdx-remote/serialize";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { getAllPosts, getPostBySlug } from "@/lib/blogs";
+import { SITE_URL } from "@/lib/site";
 
 type Props = {
   params: { slug: string };
@@ -19,8 +20,17 @@ export function generateMetadata({ params }: Props) {
   const post = getPostBySlug(params.slug);
   if (!post) return {};
   return {
-    title: `${post.title} | HyBrandsite`,
+    // 标题由 layout 的 template 自动拼上 " | MyBrandSite"
+    title: post.title,
     description: post.summary,
+    // 分享文章链接时展示文章自己的标题、摘要和发布日期
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.summary,
+      url: `${SITE_URL}/blogs/${post.slug}`,
+      publishedTime: post.date,
+    },
   };
 }
 

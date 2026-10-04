@@ -5,6 +5,7 @@ import { AiChat } from "@/components/ai-chat";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { WeixinButton } from "@/components/weixin-button";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,8 +19,46 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "HyBrandsite",
-  description: "我的个人品牌站",
+  // 让相对路径的 OG 图片等元数据解析成绝对 URL
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_TITLE,
+    // 子页面标题自动拼上站点名，如 "文章标题 | MyBrandSite"
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "AI编程",
+    "仓颉开发",
+    "鸿蒙开发",
+    "软件开发",
+    "小程序开发",
+    "技术培训",
+    "技术咨询",
+  ],
+  // 微信、QQ 等平台分享链接时展示的标题和描述
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    siteName: SITE_NAME,
+    locale: "zh_CN",
+    images: [
+      {
+        url: "/avatar/me.jpg",
+        width: 160,
+        height: 160,
+        alt: "韩老师的头像",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/avatar/me.jpg"],
+  },
 };
 
 export default function RootLayout({
